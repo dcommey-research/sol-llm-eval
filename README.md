@@ -87,7 +87,7 @@ Other environments can give different timing values. They can also give differen
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/dcommey/sol-llm-eval.git
+   git clone https://github.com/dcommey-research/sol-llm-eval.git
    cd sol-llm-eval
    ```
 
@@ -181,6 +181,7 @@ The runners save after each source. If a run stops, start the same command again
 - The local models use temperature 0, seed 42, and a limit of 2,048 output tokens. Thinking is off.
 - The hosted reference also has thinking off and a 2,048-token limit. Claude Code does not let you set temperature or seed. For this reason, the study ran the hosted reference two times. The second run is in `results/ccnc2027/cloud_repeat/`.
 - The parser accepts one JSON array, with or without one code fence. Other text makes the response invalid.
+- The script `scripts/analyze_ccnc_results.py` also runs a uniform tolerant parser on all five models and saves the results in `results/ccnc2027/evaluations/parsing_sensitivity.json`.
 - The scoring counts an invalid response as an empty prediction. It also counts the invalid response separately. It never counts an invalid response as a clean result.
 
 ## Known limits

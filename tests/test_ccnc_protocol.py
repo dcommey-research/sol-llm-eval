@@ -43,3 +43,14 @@ def test_pair_success_requires_valid_repair_response_even_when_labels_are_empty(
     assert pair_metrics(rows,data)['pairs_exact']==1
     rows[1]['success']=False
     assert pair_metrics(rows,data)['pairs_exact']==0
+
+
+def test_uniform_tolerant_parser_handles_prose_fence_and_lone_closing_fence():
+    from scripts.analyze_ccnc_results import tolerant_parse
+    report=dict(vulnerability_type='reentrancy',line_numbers=[1],severity='High',explanation='call before state update')
+    fenced_with_prose='Analysis:\n```json\n'+json.dumps([report])+'\n```\nDone.'
+    assert tolerant_parse(fenced_with_prose)==([report],None)
+    lone_closing=json.dumps([report])+'\n```'
+    assert tolerant_parse(lone_closing)==([report],None)
+    broken_nested='{"vulnerability_type":"reentrancy","line_numbers":[],"explanation":"unclosed'
+    assert tolerant_parse(broken_nested)[1] is not None

@@ -92,9 +92,25 @@ CLOUD='claude'
 FENCE=re.compile(r'```(?:json)?\s*(\[[\s\S]*?\])\s*```')
 
 def last_json_block(raw):
-    """Sensitivity parser for the cloud reference: the final fenced JSON array, prose ignored."""
+    """Extract the final fenced JSON array, ignoring surrounding prose."""
     blocks=FENCE.findall(raw)
     return parse(blocks[-1]) if blocks else parse(raw)
+
+def tolerant_parse(raw):
+    """Uniform tolerant parser applied identically to all models: accept the strict parser,
+    the final fenced JSON array (ignoring surrounding prose), or a response starting with '['
+    and ending with a lone closing Markdown fence, always with identical schema validation."""
+    reports,error=parse(raw)
+    if error is None:return reports,None
+    blocks=FENCE.findall(raw)
+    if blocks:
+        reports,error=parse(blocks[-1])
+        if error is None:return reports,None
+    stripped=raw.strip()
+    if stripped.startswith('[') and stripped.endswith('```'):
+        reports,error=parse(stripped[:-3].strip())
+        if error is None:return reports,None
+    return [],error
 
 def main():
     root=ROOT/'results/ccnc2027';report={};validation=[];sensitivity={}
@@ -124,25 +140,11 @@ def main():
                 indices=[i for i,r in enumerate(rows) if r['success']]
                 metrics['coverage']=len(indices)/len(data)
                 metrics['conditional']=summarize([rows[i] for i in indices],[data[i] for i in indices],cluster_pairs=False)
-            if model in MODELS:
-                recovered=copy.deepcopy(rows);changed=[]
-                for i,row in enumerate(recovered):
-                    raw=row['raw_response'].strip()
-                    if row['parse_error'] and raw.startswith('[') and raw.endswith('```'):
-                        reports,error=parse(raw[:-3].strip())
-                        if error is None:
-                            row['vulnerabilities']=reports;row['parse_error']=None;changed.append(row['contract_name'])
-                alternative=summarize(recovered,data,cluster_pairs=suite=='fresh')
-                verification=evaluator.evaluate_predictions(pd.DataFrame(recovered),pd.DataFrame(data))
-                assert verification.tp==alternative['tp'] and verification.fp==alternative['fp'] and verification.fn==alternative['fn']
-                if suite=='fresh':
-                    alternative.update(pair_metrics(recovered,data))
-                sensitivity[suite][model]=dict(recovered_count=len(changed),recovered_sources=changed,primary_f1=metrics['f1'],alternative=alternative)
-            if model==CLOUD:
+            if model in list(MODELS)+[CLOUD]:
                 recovered=copy.deepcopy(rows);changed=[]
                 for row in recovered:
                     if row['parse_error'] and row['parse_error']!='refusal':
-                        reports,error=last_json_block(row['raw_response'])
+                        reports,error=tolerant_parse(row['raw_response'])
                         if error is None:
                             row['vulnerabilities']=reports;row['parse_error']=None;changed.append(row['contract_name'])
                 alternative=summarize(recovered,data,cluster_pairs=suite=='fresh')
@@ -151,8 +153,10 @@ def main():
                 assert verification.tp==alternative['tp'] and verification.fp==alternative['fp'] and verification.fn==alternative['fn']
                 if suite=='fresh':
                     alternative.update(pair_metrics(recovered,data))
-                sensitivity[suite][model]=dict(rule='Final fenced JSON array, surrounding prose ignored; identical schema validation',recovered_count=len(changed),recovered_sources=changed,primary_f1=metrics['f1'],alternative=alternative)
-                allrows.setdefault('cloud_lenient',{})[suite]=recovered
+                sensitivity[suite][model]=dict(recovered_count=len(changed),recovered_sources=changed,primary_f1=metrics['f1'],alternative=alternative)
+                allrows.setdefault('tolerant',{}).setdefault(suite,{})[model]=recovered
+                if model==CLOUD:
+                    allrows.setdefault('cloud_lenient',{})[suite]=recovered
             if suite=='fresh':
                 metrics.update(pair_metrics(rows,data))
             summary[model]=metrics
@@ -186,7 +190,12 @@ def main():
     report['three_class_comparisons']={a+'_minus_'+b:paired(rows[a],rows[b],data) for a,b in itertools.combinations(rows,2)}
     report['schema_version']=2
     save(root/'evaluations/summary.json',report)
-    save(root/'evaluations/parsing_sensitivity.json',dict(primary_unchanged=True,exploratory_posthoc=True,rule='For a failed response beginning with [ and ending with a lone closing Markdown fence, remove only that fence and apply the identical full schema parser. No missing delimiters or prose repaired.',results=sensitivity,independent_count_reconciliation=True))
+    supported_tolerant={}
+    for model,rr in allrows['tolerant']['main'].items():
+        subset=[rr[i] for i in supported]
+        supported_tolerant[model]=dict(metrics=summarize(subset,restricted,categories),
+            minus_slither=paired(subset,[rows['slither'][i] for i in supported],restricted,categories))
+    save(root/'evaluations/parsing_sensitivity.json',dict(primary_unchanged=True,exploratory_posthoc=True,rule='Uniform tolerant parser applied identically to all models: accept the final fenced JSON array (ignoring surrounding prose) or remove a lone closing Markdown fence when the response begins with [, always with identical full schema validation. No malformed JSON strings or truncated arrays repaired.',results=sensitivity,supported_categories=supported_tolerant,independent_count_reconciliation=True))
     save(root/'validation/metrics_reconciliation.json',dict(status='passed',checks=validation,provenance_checks=provenance_checks,
         definitions='Micro TP/FP/FN at deduplicated target-category level; clean FPR at contract level; tool failures are abstentions/empty operational predictions.'))
     for suite in ['main','fresh']:

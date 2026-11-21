@@ -1,7 +1,7 @@
 {
   "primary_unchanged": true,
   "exploratory_posthoc": true,
-  "rule": "For a failed response beginning with [ and ending with a lone closing Markdown fence, remove only that fence and apply the identical full schema parser. No missing delimiters or prose repaired.",
+  "rule": "Uniform tolerant parser applied identically to all models: accept the final fenced JSON array (ignoring surrounding prose) or remove a lone closing Markdown fence when the response begins with [, always with identical full schema validation. No malformed JSON strings or truncated arrays repaired.",
   "results": {
     "main": {
       "qwen35": {
@@ -41,7 +41,114 @@
           "mean_latency": 8.489012465206699,
           "median_latency": 5.913552937505301,
           "p95_latency": 20.800002786838732,
-          "std_latency": 12.25347844970765
+          "std_latency": 12.25347844970765,
+          "per_class": {
+            "reentrancy": {
+              "tp": 22,
+              "fp": 12,
+              "fn": 9,
+              "precision": 0.6470588235294118,
+              "recall": 0.7096774193548387,
+              "f1": 0.676923076923077,
+              "f1_ci": [
+                0.5293840177580467,
+                0.7951807228915663
+              ],
+              "bootstrap_iterations": 10000,
+              "bootstrap_unit": "contract",
+              "clean_n": 43,
+              "clean_fp": 0,
+              "clean_failed": 0,
+              "clean_attention": 0,
+              "clean_valid_coverage": 1.0,
+              "clean_fpr": 0.0,
+              "clean_fpr_wilson95": [
+                0.0,
+                0.08200980322579117
+              ],
+              "implementation_negative_n": 35,
+              "implementation_negative_fp": 0,
+              "implementation_negative_failed": 0,
+              "implementation_negative_fpr": 0.0,
+              "parse_failures": 5,
+              "truncated_outputs": 2,
+              "tool_failures": 0,
+              "mean_latency": 8.489012465206699,
+              "median_latency": 5.913552937505301,
+              "p95_latency": 20.800002786838732,
+              "std_latency": 12.25347844970765
+            },
+            "integer_overflow": {
+              "tp": 1,
+              "fp": 4,
+              "fn": 14,
+              "precision": 0.2,
+              "recall": 0.06666666666666667,
+              "f1": 0.1,
+              "f1_ci": [
+                0.0,
+                0.3
+              ],
+              "bootstrap_iterations": 10000,
+              "bootstrap_unit": "contract",
+              "clean_n": 43,
+              "clean_fp": 0,
+              "clean_failed": 0,
+              "clean_attention": 0,
+              "clean_valid_coverage": 1.0,
+              "clean_fpr": 0.0,
+              "clean_fpr_wilson95": [
+                0.0,
+                0.08200980322579117
+              ],
+              "implementation_negative_n": 35,
+              "implementation_negative_fp": 0,
+              "implementation_negative_failed": 0,
+              "implementation_negative_fpr": 0.0,
+              "parse_failures": 5,
+              "truncated_outputs": 2,
+              "tool_failures": 0,
+              "mean_latency": 8.489012465206699,
+              "median_latency": 5.913552937505301,
+              "p95_latency": 20.800002786838732,
+              "std_latency": 12.25347844970765
+            },
+            "unchecked_low_level_calls": {
+              "tp": 42,
+              "fp": 10,
+              "fn": 10,
+              "precision": 0.8076923076923077,
+              "recall": 0.8076923076923077,
+              "f1": 0.8076923076923077,
+              "f1_ci": [
+                0.7142857142857143,
+                0.8852459016393442
+              ],
+              "bootstrap_iterations": 10000,
+              "bootstrap_unit": "contract",
+              "clean_n": 43,
+              "clean_fp": 0,
+              "clean_failed": 0,
+              "clean_attention": 0,
+              "clean_valid_coverage": 1.0,
+              "clean_fpr": 0.0,
+              "clean_fpr_wilson95": [
+                0.0,
+                0.08200980322579117
+              ],
+              "implementation_negative_n": 35,
+              "implementation_negative_fp": 0,
+              "implementation_negative_failed": 0,
+              "implementation_negative_fpr": 0.0,
+              "parse_failures": 5,
+              "truncated_outputs": 2,
+              "tool_failures": 0,
+              "mean_latency": 8.489012465206699,
+              "median_latency": 5.913552937505301,
+              "p95_latency": 20.800002786838732,
+              "std_latency": 12.25347844970765
+            }
+          }
         }
       },
       "gemma4": {
@@ -81,11 +188,118 @@
           "mean_latency": 13.526690465442204,
           "median_latency": 13.374288875493221,
           "p95_latency": 25.87938773297935,
-          "std_latency": 10.775843466702717
+          "std_latency": 10.775843466702717,
+          "per_class": {
+            "reentrancy": {
+              "tp": 30,
+              "fp": 47,
+              "fn": 1,
+              "precision": 0.38961038961038963,
+              "recall": 0.967741935483871,
+              "f1": 0.5555555555555556,
+              "f1_ci": [
+                0.43478260869565216,
+                0.6607142857142857
+              ],
+              "bootstrap_iterations": 10000,
+              "bootstrap_unit": "contract",
+              "clean_n": 43,
+              "clean_fp": 2,
+              "clean_failed": 0,
+              "clean_attention": 2,
+              "clean_valid_coverage": 1.0,
+              "clean_fpr": 0.046511627906976744,
+              "clean_fpr_wilson95": [
+                0.012849260094380227,
+                0.15455498004063967
+              ],
+              "implementation_negative_n": 35,
+              "implementation_negative_fp": 2,
+              "implementation_negative_failed": 0,
+              "implementation_negative_fpr": 0.05714285714285714,
+              "parse_failures": 1,
+              "truncated_outputs": 0,
+              "tool_failures": 0,
+              "mean_latency": 13.526690465442204,
+              "median_latency": 13.374288875493221,
+              "p95_latency": 25.87938773297935,
+              "std_latency": 10.775843466702717
+            },
+            "integer_overflow": {
+              "tp": 14,
+              "fp": 58,
+              "fn": 1,
+              "precision": 0.19444444444444445,
+              "recall": 0.9333333333333333,
+              "f1": 0.3218390804597701,
+              "f1_ci": [
+                0.19047619047619047,
+                0.4444444444444444
+              ],
+              "bootstrap_iterations": 10000,
+              "bootstrap_unit": "contract",
+              "clean_n": 43,
+              "clean_fp": 10,
+              "clean_failed": 0,
+              "clean_attention": 10,
+              "clean_valid_coverage": 1.0,
+              "clean_fpr": 0.23255813953488372,
+              "clean_fpr_wilson95": [
+                0.1315367847938448,
+                0.37744520297809003
+              ],
+              "implementation_negative_n": 35,
+              "implementation_negative_fp": 10,
+              "implementation_negative_failed": 0,
+              "implementation_negative_fpr": 0.2857142857142857,
+              "parse_failures": 1,
+              "truncated_outputs": 0,
+              "tool_failures": 0,
+              "mean_latency": 13.526690465442204,
+              "median_latency": 13.374288875493221,
+              "p95_latency": 25.87938773297935,
+              "std_latency": 10.775843466702717
+            },
+            "unchecked_low_level_calls": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 49,
+              "precision": 1.0,
+              "recall": 0.057692307692307696,
+              "f1": 0.10909090909090909,
+              "f1_ci": [
+                0.0,
+                0.22950819672131148
+              ],
+              "bootstrap_iterations": 10000,
+              "bootstrap_unit": "contract",
+              "clean_n": 43,
+              "clean_fp": 0,
+              "clean_failed": 0,
+              "clean_attention": 0,
+              "clean_valid_coverage": 1.0,
+              "clean_fpr": 0.0,
+              "clean_fpr_wilson95": [
+                0.0,
+                0.08200980322579117
+              ],
+              "implementation_negative_n": 35,
+              "implementation_negative_fp": 0,
+              "implementation_negative_failed": 0,
+              "implementation_negative_fpr": 0.0,
+              "parse_failures": 1,
+              "truncated_outputs": 0,
+              "tool_failures": 0,
+              "mean_latency": 13.526690465442204,
+              "median_latency": 13.374288875493221,
+              "p95_latency": 25.87938773297935,
+              "std_latency": 10.775843466702717
+            }
+          }
         }
       },
       "ministral3": {
-        "recovered_count": 85,
+        "recovered_count": 87,
         "recovered_sources": [
           "IERC20",
           "king_of_the_ether_throne",
@@ -106,6 +320,7 @@
           "GovernorCountingFractional",
           "0x7d09edb07d23acb532a82be3da5c17d9d85806b4",
           "overflow_single_tx",
+          "ERC20",
           "ERC7786Recipient",
           "0x0cbe050f75bc8f8c2d6c0d249fea125fd6e1acc9",
           "IERC20Permit",
@@ -129,6 +344,7 @@
           "ERC721Burnable",
           "0x9d06cbafa865037a01d322d3f4222fa3e04e5488",
           "0x78c2a1e91b52bca4130b6ed9edd9fbcfd4671c37",
+          "CircularBuffer",
           "ERC1363",
           "ERC1155Supply",
           "0x663e4229142a27f00bafb5d087e1e730648314c3",
@@ -189,9 +405,9 @@
           "bootstrap_unit": "contract",
           "clean_n": 43,
           "clean_fp": 40,
-          "clean_failed": 3,
-          "clean_attention": 43,
-          "clean_valid_coverage": 0.9302325581395349,
+          "clean_failed": 1,
+          "clean_attention": 41,
+          "clean_valid_coverage": 0.9767441860465116,
           "clean_fpr": 0.9302325581395349,
           "clean_fpr_wilson95": [
             0.8139101309875801,
@@ -199,59 +415,277 @@
           ],
           "implementation_negative_n": 35,
           "implementation_negative_fp": 32,
-          "implementation_negative_failed": 3,
+          "implementation_negative_failed": 1,
           "implementation_negative_fpr": 0.9142857142857143,
-          "parse_failures": 7,
+          "parse_failures": 5,
           "truncated_outputs": 2,
           "tool_failures": 0,
           "mean_latency": 14.046472369371207,
           "median_latency": 11.015656395989936,
           "p95_latency": 30.364083552089813,
-          "std_latency": 14.973892074494286
+          "std_latency": 14.973892074494286,
+          "per_class": {
+            "reentrancy": {
+              "tp": 26,
+              "fp": 35,
+              "fn": 5,
+              "precision": 0.4262295081967213,
+              "recall": 0.8387096774193549,
+              "f1": 0.5652173913043478,
+              "f1_ci": [
+                0.4318181818181818,
+                0.6792452830188679
+              ],
+              "bootstrap_iterations": 10000,
+              "bootstrap_unit": "contract",
+              "clean_n": 43,
+              "clean_fp": 4,
+              "clean_failed": 1,
+              "clean_attention": 5,
+              "clean_valid_coverage": 0.9767441860465116,
+              "clean_fpr": 0.09302325581395349,
+              "clean_fpr_wilson95": [
+                0.03677164063171276,
+                0.21602703641253587
+              ],
+              "implementation_negative_n": 35,
+              "implementation_negative_fp": 4,
+              "implementation_negative_failed": 1,
+              "implementation_negative_fpr": 0.11428571428571428,
+              "parse_failures": 5,
+              "truncated_outputs": 2,
+              "tool_failures": 0,
+              "mean_latency": 14.046472369371207,
+              "median_latency": 11.015656395989936,
+              "p95_latency": 30.364083552089813,
+              "std_latency": 14.973892074494286
+            },
+            "integer_overflow": {
+              "tp": 13,
+              "fp": 26,
+              "fn": 2,
+              "precision": 0.3333333333333333,
+              "recall": 0.8666666666666667,
+              "f1": 0.48148148148148145,
+              "f1_ci": [
+                0.3018867924528302,
+                0.6333536585365851
+              ],
+              "bootstrap_iterations": 10000,
+              "bootstrap_unit": "contract",
+              "clean_n": 43,
+              "clean_fp": 5,
+              "clean_failed": 1,
+              "clean_attention": 6,
+              "clean_valid_coverage": 0.9767441860465116,
+              "clean_fpr": 0.11627906976744186,
+              "clean_fpr_wilson95": [
+                0.05070427739804166,
+                0.24479161810082128
+              ],
+              "implementation_negative_n": 35,
+              "implementation_negative_fp": 5,
+              "implementation_negative_failed": 1,
+              "implementation_negative_fpr": 0.14285714285714285,
+              "parse_failures": 5,
+              "truncated_outputs": 2,
+              "tool_failures": 0,
+              "mean_latency": 14.046472369371207,
+              "median_latency": 11.015656395989936,
+              "p95_latency": 30.364083552089813,
+              "std_latency": 14.973892074494286
+            },
+            "unchecked_low_level_calls": {
+              "tp": 51,
+              "fp": 73,
+              "fn": 1,
+              "precision": 0.4112903225806452,
+              "recall": 0.9807692307692307,
+              "f1": 0.5795454545454546,
+              "f1_ci": [
+                0.48520710059171596,
+                0.6630434782608695
+              ],
+              "bootstrap_iterations": 10000,
+              "bootstrap_unit": "contract",
+              "clean_n": 43,
+              "clean_fp": 40,
+              "clean_failed": 1,
+              "clean_attention": 41,
+              "clean_valid_coverage": 0.9767441860465116,
+              "clean_fpr": 0.9302325581395349,
+              "clean_fpr_wilson95": [
+                0.8139101309875801,
+                0.9759884104227855
+              ],
+              "implementation_negative_n": 35,
+              "implementation_negative_fp": 32,
+              "implementation_negative_failed": 1,
+              "implementation_negative_fpr": 0.9142857142857143,
+              "parse_failures": 5,
+              "truncated_outputs": 2,
+              "tool_failures": 0,
+              "mean_latency": 14.046472369371207,
+              "median_latency": 11.015656395989936,
+              "p95_latency": 30.364083552089813,
+              "std_latency": 14.973892074494286
+            }
+          }
         }
       },
       "foundationsec": {
-        "recovered_count": 0,
-        "recovered_sources": [],
+        "recovered_count": 4,
+        "recovered_sources": [
+          "spank_chain_payment",
+          "0x3a0e9acd953ffc0dd18d63603488846a6b8b2b01",
+          "MultiSignerERC7913Weighted",
+          "0x8fd1e427396ddb511533cf9abdbebd0a7e08da35"
+        ],
         "primary_f1": 0.5693950177935944,
         "alternative": {
-          "tp": 80,
-          "fp": 103,
-          "fn": 18,
-          "precision": 0.4371584699453552,
-          "recall": 0.8163265306122449,
-          "f1": 0.5693950177935944,
+          "tp": 83,
+          "fp": 109,
+          "fn": 15,
+          "precision": 0.4322916666666667,
+          "recall": 0.8469387755102041,
+          "f1": 0.5724137931034483,
           "f1_ci": [
-            0.5217391304347826,
-            0.6131386861313869
+            0.5273972602739726,
+            0.6148409893992933
           ],
           "bootstrap_iterations": 10000,
           "bootstrap_unit": "contract",
           "clean_n": 43,
-          "clean_fp": 12,
-          "clean_failed": 4,
+          "clean_fp": 13,
+          "clean_failed": 3,
           "clean_attention": 16,
-          "clean_valid_coverage": 0.9069767441860465,
-          "clean_fpr": 0.27906976744186046,
+          "clean_valid_coverage": 0.9302325581395349,
+          "clean_fpr": 0.3023255813953488,
           "clean_fpr_wilson95": [
-            0.16746613786237488,
-            0.42691028681878873
+            0.1860200013584818,
+            0.45105364177729607
           ],
           "implementation_negative_n": 35,
-          "implementation_negative_fp": 12,
-          "implementation_negative_failed": 4,
-          "implementation_negative_fpr": 0.34285714285714286,
-          "parse_failures": 17,
+          "implementation_negative_fp": 13,
+          "implementation_negative_failed": 3,
+          "implementation_negative_fpr": 0.37142857142857144,
+          "parse_failures": 13,
           "truncated_outputs": 0,
           "tool_failures": 0,
           "mean_latency": 9.441848151780972,
           "median_latency": 8.091634625001461,
           "p95_latency": 20.7397038455062,
-          "std_latency": 9.150120653845894
+          "std_latency": 9.150120653845894,
+          "per_class": {
+            "reentrancy": {
+              "tp": 28,
+              "fp": 46,
+              "fn": 3,
+              "precision": 0.3783783783783784,
+              "recall": 0.9032258064516129,
+              "f1": 0.5333333333333333,
+              "f1_ci": [
+                0.40815335843075096,
+                0.6415094339622641
+              ],
+              "bootstrap_iterations": 10000,
+              "bootstrap_unit": "contract",
+              "clean_n": 43,
+              "clean_fp": 6,
+              "clean_failed": 3,
+              "clean_attention": 9,
+              "clean_valid_coverage": 0.9302325581395349,
+              "clean_fpr": 0.13953488372093023,
+              "clean_fpr_wilson95": [
+                0.06555723427964878,
+                0.2726358796738286
+              ],
+              "implementation_negative_n": 35,
+              "implementation_negative_fp": 6,
+              "implementation_negative_failed": 3,
+              "implementation_negative_fpr": 0.17142857142857143,
+              "parse_failures": 13,
+              "truncated_outputs": 0,
+              "tool_failures": 0,
+              "mean_latency": 9.441848151780972,
+              "median_latency": 8.091634625001461,
+              "p95_latency": 20.7397038455062,
+              "std_latency": 9.150120653845894
+            },
+            "integer_overflow": {
+              "tp": 11,
+              "fp": 15,
+              "fn": 4,
+              "precision": 0.4230769230769231,
+              "recall": 0.7333333333333333,
+              "f1": 0.5365853658536586,
+              "f1_ci": [
+                0.3333333333333333,
+                0.7058823529411765
+              ],
+              "bootstrap_iterations": 10000,
+              "bootstrap_unit": "contract",
+              "clean_n": 43,
+              "clean_fp": 3,
+              "clean_failed": 3,
+              "clean_attention": 6,
+              "clean_valid_coverage": 0.9302325581395349,
+              "clean_fpr": 0.06976744186046512,
+              "clean_fpr_wilson95": [
+                0.024011589577214484,
+                0.18608986901241975
+              ],
+              "implementation_negative_n": 35,
+              "implementation_negative_fp": 3,
+              "implementation_negative_failed": 3,
+              "implementation_negative_fpr": 0.08571428571428572,
+              "parse_failures": 13,
+              "truncated_outputs": 0,
+              "tool_failures": 0,
+              "mean_latency": 9.441848151780972,
+              "median_latency": 8.091634625001461,
+              "p95_latency": 20.7397038455062,
+              "std_latency": 9.150120653845894
+            },
+            "unchecked_low_level_calls": {
+              "tp": 44,
+              "fp": 48,
+              "fn": 8,
+              "precision": 0.4782608695652174,
+              "recall": 0.8461538461538461,
+              "f1": 0.6111111111111112,
+              "f1_ci": [
+                0.5076923076923077,
+                0.7
+              ],
+              "bootstrap_iterations": 10000,
+              "bootstrap_unit": "contract",
+              "clean_n": 43,
+              "clean_fp": 13,
+              "clean_failed": 3,
+              "clean_attention": 16,
+              "clean_valid_coverage": 0.9302325581395349,
+              "clean_fpr": 0.3023255813953488,
+              "clean_fpr_wilson95": [
+                0.1860200013584818,
+                0.45105364177729607
+              ],
+              "implementation_negative_n": 35,
+              "implementation_negative_fp": 13,
+              "implementation_negative_failed": 3,
+              "implementation_negative_fpr": 0.37142857142857144,
+              "parse_failures": 13,
+              "truncated_outputs": 0,
+              "tool_failures": 0,
+              "mean_latency": 9.441848151780972,
+              "median_latency": 8.091634625001461,
+              "p95_latency": 20.7397038455062,
+              "std_latency": 9.150120653845894
+            }
+          }
         }
       },
       "claude": {
-        "rule": "Final fenced JSON array, surrounding prose ignored; identical schema validation",
         "recovered_count": 16,
         "recovered_sources": [
           "ERC2771Context",
@@ -455,6 +889,113 @@
           "median_latency": 5.333489708500565,
           "p95_latency": 24.855367539307903,
           "std_latency": 9.431467751828158,
+          "per_class": {
+            "reentrancy": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.6666666666666666,
+              "recall": 0.6666666666666666,
+              "f1": 0.6666666666666666,
+              "f1_ci": [
+                0.0,
+                1.0
+              ],
+              "bootstrap_iterations": 10000,
+              "bootstrap_unit": "pair",
+              "clean_n": 9,
+              "clean_fp": 0,
+              "clean_failed": 3,
+              "clean_attention": 3,
+              "clean_valid_coverage": 0.6666666666666666,
+              "clean_fpr": 0.0,
+              "clean_fpr_wilson95": [
+                0.0,
+                0.2991450484195441
+              ],
+              "implementation_negative_n": 9,
+              "implementation_negative_fp": 0,
+              "implementation_negative_failed": 3,
+              "implementation_negative_fpr": 0.0,
+              "parse_failures": 3,
+              "truncated_outputs": 0,
+              "tool_failures": 0,
+              "mean_latency": 8.416296643445902,
+              "median_latency": 5.333489708500565,
+              "p95_latency": 24.855367539307903,
+              "std_latency": 9.431467751828158
+            },
+            "integer_overflow": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.6666666666666666,
+              "f1": 0.8,
+              "f1_ci": [
+                0.0,
+                1.0
+              ],
+              "bootstrap_iterations": 10000,
+              "bootstrap_unit": "pair",
+              "clean_n": 9,
+              "clean_fp": 0,
+              "clean_failed": 3,
+              "clean_attention": 3,
+              "clean_valid_coverage": 0.6666666666666666,
+              "clean_fpr": 0.0,
+              "clean_fpr_wilson95": [
+                0.0,
+                0.2991450484195441
+              ],
+              "implementation_negative_n": 9,
+              "implementation_negative_fp": 0,
+              "implementation_negative_failed": 3,
+              "implementation_negative_fpr": 0.0,
+              "parse_failures": 3,
+              "truncated_outputs": 0,
+              "tool_failures": 0,
+              "mean_latency": 8.416296643445902,
+              "median_latency": 5.333489708500565,
+              "p95_latency": 24.855367539307903,
+              "std_latency": 9.431467751828158
+            },
+            "unchecked_low_level_calls": {
+              "tp": 3,
+              "fp": 3,
+              "fn": 0,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "f1_ci": [
+                0.2857142857142857,
+                0.8888888888888888
+              ],
+              "bootstrap_iterations": 10000,
+              "bootstrap_unit": "pair",
+              "clean_n": 9,
+              "clean_fp": 2,
+              "clean_failed": 3,
+              "clean_attention": 5,
+              "clean_valid_coverage": 0.6666666666666666,
+              "clean_fpr": 0.2222222222222222,
+              "clean_fpr_wilson95": [
+                0.06322510711784671,
+                0.5474110308930111
+              ],
+              "implementation_negative_n": 9,
+              "implementation_negative_fp": 2,
+              "implementation_negative_failed": 3,
+              "implementation_negative_fpr": 0.2222222222222222,
+              "parse_failures": 3,
+              "truncated_outputs": 0,
+              "tool_failures": 0,
+              "mean_latency": 8.416296643445902,
+              "median_latency": 5.333489708500565,
+              "p95_latency": 24.855367539307903,
+              "std_latency": 9.431467751828158
+            }
+          },
           "pairs_label_match": 4,
           "pairs_exact": 2,
           "pairs_n": 9,
@@ -499,6 +1040,113 @@
           "median_latency": 8.369153666499187,
           "p95_latency": 13.479609696455007,
           "std_latency": 4.291856257187957,
+          "per_class": {
+            "reentrancy": {
+              "tp": 2,
+              "fp": 6,
+              "fn": 1,
+              "precision": 0.25,
+              "recall": 0.6666666666666666,
+              "f1": 0.36363636363636365,
+              "f1_ci": [
+                0.0,
+                0.6666666666666666
+              ],
+              "bootstrap_iterations": 10000,
+              "bootstrap_unit": "pair",
+              "clean_n": 9,
+              "clean_fp": 4,
+              "clean_failed": 2,
+              "clean_attention": 6,
+              "clean_valid_coverage": 0.7777777777777778,
+              "clean_fpr": 0.4444444444444444,
+              "clean_fpr_wilson95": [
+                0.18877852109766452,
+                0.733348706504507
+              ],
+              "implementation_negative_n": 9,
+              "implementation_negative_fp": 4,
+              "implementation_negative_failed": 2,
+              "implementation_negative_fpr": 0.4444444444444444,
+              "parse_failures": 3,
+              "truncated_outputs": 0,
+              "tool_failures": 0,
+              "mean_latency": 7.800096463002976,
+              "median_latency": 8.369153666499187,
+              "p95_latency": 13.479609696455007,
+              "std_latency": 4.291856257187957
+            },
+            "integer_overflow": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "f1_ci": [
+                0.0,
+                1.0
+              ],
+              "bootstrap_iterations": 10000,
+              "bootstrap_unit": "pair",
+              "clean_n": 9,
+              "clean_fp": 0,
+              "clean_failed": 2,
+              "clean_attention": 2,
+              "clean_valid_coverage": 0.7777777777777778,
+              "clean_fpr": 0.0,
+              "clean_fpr_wilson95": [
+                0.0,
+                0.2991450484195441
+              ],
+              "implementation_negative_n": 9,
+              "implementation_negative_fp": 0,
+              "implementation_negative_failed": 2,
+              "implementation_negative_fpr": 0.0,
+              "parse_failures": 3,
+              "truncated_outputs": 0,
+              "tool_failures": 0,
+              "mean_latency": 7.800096463002976,
+              "median_latency": 8.369153666499187,
+              "p95_latency": 13.479609696455007,
+              "std_latency": 4.291856257187957
+            },
+            "unchecked_low_level_calls": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 3,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "f1_ci": [
+                0.0,
+                0.0
+              ],
+              "bootstrap_iterations": 10000,
+              "bootstrap_unit": "pair",
+              "clean_n": 9,
+              "clean_fp": 0,
+              "clean_failed": 2,
+              "clean_attention": 2,
+              "clean_valid_coverage": 0.7777777777777778,
+              "clean_fpr": 0.0,
+              "clean_fpr_wilson95": [
+                0.0,
+                0.2991450484195441
+              ],
+              "implementation_negative_n": 9,
+              "implementation_negative_fp": 0,
+              "implementation_negative_failed": 2,
+              "implementation_negative_fpr": 0.0,
+              "parse_failures": 3,
+              "truncated_outputs": 0,
+              "tool_failures": 0,
+              "mean_latency": 7.800096463002976,
+              "median_latency": 8.369153666499187,
+              "p95_latency": 13.479609696455007,
+              "std_latency": 4.291856257187957
+            }
+          },
           "pairs_label_match": 4,
           "pairs_exact": 3,
           "pairs_n": 9,
@@ -554,6 +1202,113 @@
           "median_latency": 6.946864770507091,
           "p95_latency": 11.970490279491058,
           "std_latency": 2.564756286882232,
+          "per_class": {
+            "reentrancy": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.6666666666666666,
+              "recall": 0.6666666666666666,
+              "f1": 0.6666666666666666,
+              "f1_ci": [
+                0.0,
+                1.0
+              ],
+              "bootstrap_iterations": 10000,
+              "bootstrap_unit": "pair",
+              "clean_n": 9,
+              "clean_fp": 1,
+              "clean_failed": 5,
+              "clean_attention": 6,
+              "clean_valid_coverage": 0.4444444444444444,
+              "clean_fpr": 0.1111111111111111,
+              "clean_fpr_wilson95": [
+                0.019890887638544907,
+                0.434999705576656
+              ],
+              "implementation_negative_n": 9,
+              "implementation_negative_fp": 1,
+              "implementation_negative_failed": 5,
+              "implementation_negative_fpr": 0.1111111111111111,
+              "parse_failures": 8,
+              "truncated_outputs": 0,
+              "tool_failures": 0,
+              "mean_latency": 7.966529888831752,
+              "median_latency": 6.946864770507091,
+              "p95_latency": 11.970490279491058,
+              "std_latency": 2.564756286882232
+            },
+            "integer_overflow": {
+              "tp": 0,
+              "fp": 2,
+              "fn": 3,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "f1_ci": [
+                0.0,
+                0.0
+              ],
+              "bootstrap_iterations": 10000,
+              "bootstrap_unit": "pair",
+              "clean_n": 9,
+              "clean_fp": 2,
+              "clean_failed": 5,
+              "clean_attention": 7,
+              "clean_valid_coverage": 0.4444444444444444,
+              "clean_fpr": 0.2222222222222222,
+              "clean_fpr_wilson95": [
+                0.06322510711784671,
+                0.5474110308930111
+              ],
+              "implementation_negative_n": 9,
+              "implementation_negative_fp": 2,
+              "implementation_negative_failed": 5,
+              "implementation_negative_fpr": 0.2222222222222222,
+              "parse_failures": 8,
+              "truncated_outputs": 0,
+              "tool_failures": 0,
+              "mean_latency": 7.966529888831752,
+              "median_latency": 6.946864770507091,
+              "p95_latency": 11.970490279491058,
+              "std_latency": 2.564756286882232
+            },
+            "unchecked_low_level_calls": {
+              "tp": 1,
+              "fp": 7,
+              "fn": 2,
+              "precision": 0.125,
+              "recall": 0.3333333333333333,
+              "f1": 0.18181818181818182,
+              "f1_ci": [
+                0.0,
+                0.5
+              ],
+              "bootstrap_iterations": 10000,
+              "bootstrap_unit": "pair",
+              "clean_n": 9,
+              "clean_fp": 2,
+              "clean_failed": 5,
+              "clean_attention": 7,
+              "clean_valid_coverage": 0.4444444444444444,
+              "clean_fpr": 0.2222222222222222,
+              "clean_fpr_wilson95": [
+                0.06322510711784671,
+                0.5474110308930111
+              ],
+              "implementation_negative_n": 9,
+              "implementation_negative_fp": 2,
+              "implementation_negative_failed": 5,
+              "implementation_negative_fpr": 0.2222222222222222,
+              "parse_failures": 8,
+              "truncated_outputs": 0,
+              "tool_failures": 0,
+              "mean_latency": 7.966529888831752,
+              "median_latency": 6.946864770507091,
+              "p95_latency": 11.970490279491058,
+              "std_latency": 2.564756286882232
+            }
+          },
           "pairs_label_match": 1,
           "pairs_exact": 0,
           "pairs_n": 9,
@@ -598,6 +1353,113 @@
           "median_latency": 6.815299583497108,
           "p95_latency": 10.387188449993845,
           "std_latency": 2.966512129414713,
+          "per_class": {
+            "reentrancy": {
+              "tp": 3,
+              "fp": 10,
+              "fn": 0,
+              "precision": 0.23076923076923078,
+              "recall": 1.0,
+              "f1": 0.375,
+              "f1_ci": [
+                0.0,
+                0.5882352941176471
+              ],
+              "bootstrap_iterations": 10000,
+              "bootstrap_unit": "pair",
+              "clean_n": 9,
+              "clean_fp": 6,
+              "clean_failed": 1,
+              "clean_attention": 7,
+              "clean_valid_coverage": 0.8888888888888888,
+              "clean_fpr": 0.6666666666666666,
+              "clean_fpr_wilson95": [
+                0.3542021355803963,
+                0.879416181613089
+              ],
+              "implementation_negative_n": 9,
+              "implementation_negative_fp": 6,
+              "implementation_negative_failed": 1,
+              "implementation_negative_fpr": 0.6666666666666666,
+              "parse_failures": 1,
+              "truncated_outputs": 0,
+              "tool_failures": 0,
+              "mean_latency": 6.584864071833888,
+              "median_latency": 6.815299583497108,
+              "p95_latency": 10.387188449993845,
+              "std_latency": 2.966512129414713
+            },
+            "integer_overflow": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.6666666666666666,
+              "recall": 0.6666666666666666,
+              "f1": 0.6666666666666666,
+              "f1_ci": [
+                0.0,
+                1.0
+              ],
+              "bootstrap_iterations": 10000,
+              "bootstrap_unit": "pair",
+              "clean_n": 9,
+              "clean_fp": 1,
+              "clean_failed": 1,
+              "clean_attention": 2,
+              "clean_valid_coverage": 0.8888888888888888,
+              "clean_fpr": 0.1111111111111111,
+              "clean_fpr_wilson95": [
+                0.019890887638544907,
+                0.434999705576656
+              ],
+              "implementation_negative_n": 9,
+              "implementation_negative_fp": 1,
+              "implementation_negative_failed": 1,
+              "implementation_negative_fpr": 0.1111111111111111,
+              "parse_failures": 1,
+              "truncated_outputs": 0,
+              "tool_failures": 0,
+              "mean_latency": 6.584864071833888,
+              "median_latency": 6.815299583497108,
+              "p95_latency": 10.387188449993845,
+              "std_latency": 2.966512129414713
+            },
+            "unchecked_low_level_calls": {
+              "tp": 3,
+              "fp": 12,
+              "fn": 0,
+              "precision": 0.2,
+              "recall": 1.0,
+              "f1": 0.3333333333333333,
+              "f1_ci": [
+                0.10526315789473684,
+                0.5714285714285714
+              ],
+              "bootstrap_iterations": 10000,
+              "bootstrap_unit": "pair",
+              "clean_n": 9,
+              "clean_fp": 6,
+              "clean_failed": 1,
+              "clean_attention": 7,
+              "clean_valid_coverage": 0.8888888888888888,
+              "clean_fpr": 0.6666666666666666,
+              "clean_fpr_wilson95": [
+                0.3542021355803963,
+                0.879416181613089
+              ],
+              "implementation_negative_n": 9,
+              "implementation_negative_fp": 6,
+              "implementation_negative_failed": 1,
+              "implementation_negative_fpr": 0.6666666666666666,
+              "parse_failures": 1,
+              "truncated_outputs": 0,
+              "tool_failures": 0,
+              "mean_latency": 6.584864071833888,
+              "median_latency": 6.815299583497108,
+              "p95_latency": 10.387188449993845,
+              "std_latency": 2.966512129414713
+            }
+          },
           "pairs_label_match": 1,
           "pairs_exact": 0,
           "pairs_n": 9,
@@ -605,7 +1467,6 @@
         }
       },
       "claude": {
-        "rule": "Final fenced JSON array, surrounding prose ignored; identical schema validation",
         "recovered_count": 11,
         "recovered_sources": [
           "unit_02",
@@ -767,6 +1628,253 @@
           "pairs_n": 9,
           "pairs_definition": "Both sources yield valid successful outputs with exact target-category matches; invalid repair output is unanswered, not correct."
         }
+      }
+    }
+  },
+  "supported_categories": {
+    "qwen35": {
+      "metrics": {
+        "tp": 64,
+        "fp": 22,
+        "fn": 19,
+        "precision": 0.7441860465116279,
+        "recall": 0.7710843373493976,
+        "f1": 0.757396449704142,
+        "f1_ci": [
+          0.6941176470588235,
+          0.8148148148148148
+        ],
+        "bootstrap_iterations": 10000,
+        "bootstrap_unit": "contract",
+        "clean_n": 43,
+        "clean_fp": 0,
+        "clean_failed": 0,
+        "clean_attention": 0,
+        "clean_valid_coverage": 1.0,
+        "clean_fpr": 0.0,
+        "clean_fpr_wilson95": [
+          0.0,
+          0.08200980322579117
+        ],
+        "implementation_negative_n": 35,
+        "implementation_negative_fp": 0,
+        "implementation_negative_failed": 0,
+        "implementation_negative_fpr": 0.0,
+        "parse_failures": 5,
+        "truncated_outputs": 2,
+        "tool_failures": 0,
+        "mean_latency": 9.370706720024115,
+        "median_latency": 6.35506958400947,
+        "p95_latency": 21.123873349605127,
+        "std_latency": 12.677542413737875
+      },
+      "minus_slither": {
+        "delta": -0.19498450267681033,
+        "ci": [
+          -0.2564188860279473,
+          -0.13611498851558002
+        ],
+        "n": 125,
+        "iterations": 10000,
+        "unit": "paired contract",
+        "confidence": 0.95,
+        "multiplicity": "unadjusted descriptive intervals"
+      }
+    },
+    "gemma4": {
+      "metrics": {
+        "tp": 33,
+        "fp": 46,
+        "fn": 50,
+        "precision": 0.4177215189873418,
+        "recall": 0.39759036144578314,
+        "f1": 0.4074074074074074,
+        "f1_ci": [
+          0.30215148635808337,
+          0.5125
+        ],
+        "bootstrap_iterations": 10000,
+        "bootstrap_unit": "contract",
+        "clean_n": 43,
+        "clean_fp": 2,
+        "clean_failed": 0,
+        "clean_attention": 2,
+        "clean_valid_coverage": 1.0,
+        "clean_fpr": 0.046511627906976744,
+        "clean_fpr_wilson95": [
+          0.012849260094380227,
+          0.15455498004063967
+        ],
+        "implementation_negative_n": 35,
+        "implementation_negative_fp": 2,
+        "implementation_negative_failed": 0,
+        "implementation_negative_fpr": 0.05714285714285714,
+        "parse_failures": 1,
+        "truncated_outputs": 0,
+        "tool_failures": 0,
+        "mean_latency": 13.76399705429515,
+        "median_latency": 14.304498665995197,
+        "p95_latency": 25.419210091378766,
+        "std_latency": 11.170232478052435
+      },
+      "minus_slither": {
+        "delta": -0.5449735449735449,
+        "ci": [
+          -0.649622214335203,
+          -0.4390529286255076
+        ],
+        "n": 125,
+        "iterations": 10000,
+        "unit": "paired contract",
+        "confidence": 0.95,
+        "multiplicity": "unadjusted descriptive intervals"
+      }
+    },
+    "ministral3": {
+      "metrics": {
+        "tp": 77,
+        "fp": 99,
+        "fn": 6,
+        "precision": 0.4375,
+        "recall": 0.927710843373494,
+        "f1": 0.5945945945945946,
+        "f1_ci": [
+          0.5425101214574899,
+          0.6417910447761194
+        ],
+        "bootstrap_iterations": 10000,
+        "bootstrap_unit": "contract",
+        "clean_n": 43,
+        "clean_fp": 40,
+        "clean_failed": 1,
+        "clean_attention": 41,
+        "clean_valid_coverage": 0.9767441860465116,
+        "clean_fpr": 0.9302325581395349,
+        "clean_fpr_wilson95": [
+          0.8139101309875801,
+          0.9759884104227855
+        ],
+        "implementation_negative_n": 35,
+        "implementation_negative_fp": 32,
+        "implementation_negative_failed": 1,
+        "implementation_negative_fpr": 0.9142857142857143,
+        "parse_failures": 5,
+        "truncated_outputs": 2,
+        "tool_failures": 0,
+        "mean_latency": 14.755972575367894,
+        "median_latency": 11.656609249999747,
+        "p95_latency": 32.81598058361559,
+        "std_latency": 15.631760515130031
+      },
+      "minus_slither": {
+        "delta": -0.3577863577863577,
+        "ci": [
+          -0.4170734150586863,
+          -0.30167010030576485
+        ],
+        "n": 125,
+        "iterations": 10000,
+        "unit": "paired contract",
+        "confidence": 0.95,
+        "multiplicity": "unadjusted descriptive intervals"
+      }
+    },
+    "foundationsec": {
+      "metrics": {
+        "tp": 72,
+        "fp": 83,
+        "fn": 11,
+        "precision": 0.4645161290322581,
+        "recall": 0.8674698795180723,
+        "f1": 0.6050420168067226,
+        "f1_ci": [
+          0.5627705627705628,
+          0.642577452667814
+        ],
+        "bootstrap_iterations": 10000,
+        "bootstrap_unit": "contract",
+        "clean_n": 43,
+        "clean_fp": 13,
+        "clean_failed": 3,
+        "clean_attention": 16,
+        "clean_valid_coverage": 0.9302325581395349,
+        "clean_fpr": 0.3023255813953488,
+        "clean_fpr_wilson95": [
+          0.1860200013584818,
+          0.45105364177729607
+        ],
+        "implementation_negative_n": 35,
+        "implementation_negative_fp": 13,
+        "implementation_negative_failed": 3,
+        "implementation_negative_fpr": 0.37142857142857144,
+        "parse_failures": 12,
+        "truncated_outputs": 0,
+        "tool_failures": 0,
+        "mean_latency": 9.749183641658165,
+        "median_latency": 8.119135374989128,
+        "p95_latency": 25.225568407983502,
+        "std_latency": 9.599138400728407
+      },
+      "minus_slither": {
+        "delta": -0.3473389355742297,
+        "ci": [
+          -0.3942400363450097,
+          -0.3028178252236119
+        ],
+        "n": 125,
+        "iterations": 10000,
+        "unit": "paired contract",
+        "confidence": 0.95,
+        "multiplicity": "unadjusted descriptive intervals"
+      }
+    },
+    "claude": {
+      "metrics": {
+        "tp": 72,
+        "fp": 3,
+        "fn": 11,
+        "precision": 0.96,
+        "recall": 0.8674698795180723,
+        "f1": 0.9113924050632911,
+        "f1_ci": [
+          0.8590604026845637,
+          0.9554140127388535
+        ],
+        "bootstrap_iterations": 10000,
+        "bootstrap_unit": "contract",
+        "clean_n": 43,
+        "clean_fp": 0,
+        "clean_failed": 2,
+        "clean_attention": 2,
+        "clean_valid_coverage": 0.9534883720930233,
+        "clean_fpr": 0.0,
+        "clean_fpr_wilson95": [
+          0.0,
+          0.08200980322579117
+        ],
+        "implementation_negative_n": 35,
+        "implementation_negative_fp": 0,
+        "implementation_negative_failed": 1,
+        "implementation_negative_fpr": 0.0,
+        "parse_failures": 12,
+        "truncated_outputs": 9,
+        "tool_failures": 0,
+        "mean_latency": 10.283416181009729,
+        "median_latency": 7.166947499994421,
+        "p95_latency": 49.057786658802065,
+        "std_latency": 12.351370007008148
+      },
+      "minus_slither": {
+        "delta": -0.04098854731766122,
+        "ci": [
+          -0.09066823667942303,
+          0.003663878932696152
+        ],
+        "n": 125,
+        "iterations": 10000,
+        "unit": "paired contract",
+        "confidence": 0.95,
+        "multiplicity": "unadjusted descriptive intervals"
       }
     }
   },
